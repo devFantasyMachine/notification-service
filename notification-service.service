@@ -1,0 +1,9 @@
+[Unit]
+Description=A Auth Server
+After=syslog.target
+
+[Service]
+ExecStart=java -jar /home/letsgo/notification-service/target/notification-service-1.0.0.jar SuccessExitStatus=143
+
+[Install] 
+WantedBy=multi-user.target

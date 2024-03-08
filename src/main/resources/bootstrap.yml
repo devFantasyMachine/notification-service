@@ -1,0 +1,84 @@
+server:
+  port: ${SERVER_PORT:6066}
+  shutdown: graceful
+  error:
+    includeStacktrace: NEVER
+    includeException: false
+    whitelabel:
+      enabled: false
+  ssl:
+    enabled: false
+    trust-store-type: JKS
+    trust-store-provider: SUN
+    trust-store: classpath:letsgo-ssl-store.jks
+    trust-store-password: ys0b@w-cm
+
+encrypt:
+  key: qe4fsLLRFkKWU+teQnJe2cH8tOk3ocvryyQaRDXqbOWZXovuMvmlcWdgQMp0XyXCSG6b25
+
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+
+
+logging:
+  file.name: ${LOG_FILE:./logs/myLog.log}
+  level:
+    root: INFO
+    org.springframework.web: INFO
+
+spring:
+  application:
+    name: notification-service
+  profiles:
+    active: prod
+  cache:
+    type: redis
+
+  data:
+    redis:
+      url: redis://localhost:6379
+
+  security:
+    oauth2:
+      resource-server:
+        jwt:
+          issuer-uri: http://88.198.150.195:8099/AUTH-SERVICE
+  cloud:
+    config:
+      enabled: true
+      uri:
+        - https://${CONFIG_SERVER_HOST:localhost}:${CONFIG_SERVER_PORT:4808}/
+      tls:
+        enabled: true
+        trustStore: classpath:letsgo-ssl-store.jks
+        trustStorePassword: ys0b@w-cm
+        trustStoreType: jks
+        keyStore: classpath:letsgo-ssl-store.jks
+        keyStoreType: jks
+        keyPassword: ys0b@w-cm
+        keyStorePassword: ys0b@w-cm
+      name: driver-service
+      username: yowyob-service
+      password: ${CONFIG_SERVER_PASSWORD:52575234647119692221}
+    server:
+      encrypt:
+        enabled: false
+
+
+  pulsar:
+    client:
+      service-url: pulsar://88.198.150.195:6650
+      auth-plugin-class-name: org.apache.pulsar.client.impl.auth.AuthenticationBasic
+      authentication:
+        user-id: pulsar
+        password: pulsar
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
